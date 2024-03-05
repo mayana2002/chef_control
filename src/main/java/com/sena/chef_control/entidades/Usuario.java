@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Data
 @Builder
@@ -51,4 +52,9 @@ public class Usuario {
     @JoinColumn(name = "id_estado")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Estado idEstado;
+
+    public void setContrasena(String contrasena) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.contrasena = passwordEncoder.encode(contrasena);
+    }
 }

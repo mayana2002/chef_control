@@ -1,5 +1,7 @@
 package com.sena.chef_control.controladores;
 
+import com.sena.chef_control.dto.ProveedorSolicitud;
+import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Proveedor;
 import com.sena.chef_control.servicios.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,20 @@ public class ProveedorControlador {
     private ProveedorServicio proveedorServicio;
 
     @PostMapping("/crear")
-    public ResponseEntity<Proveedor> registrarProveedorControlador(@RequestBody Proveedor proveedor) {
+    public ResponseEntity<Proveedor> registrarProveedorControlador(@RequestBody ProveedorSolicitud proveedorSolicitud) {
+        Estado estado = new Estado();
+        estado.setIdEstado(1);
+
+        Proveedor proveedor = new Proveedor();
+        proveedor.setNombreProveedor(proveedorSolicitud.getNombreProveedor());
+        proveedor.setNumeroProveedor(proveedorSolicitud.getNumeroProveedor());
+        proveedor.setCorreoProveedor(proveedorSolicitud.getCorreoProveedor());
+        proveedor.setNombreEmpresa(proveedorSolicitud.getNombreEmpresa());
+        proveedor.setNumeroEmpresa(proveedorSolicitud.getNumeroEmpresa());
+        proveedor.setCorreoEmpresa(proveedorSolicitud.getCorreoEmpresa());
+        proveedor.setDescripcionProducto(proveedorSolicitud.getDescripcionProducto());
+        proveedor.setIdEstado(estado);
+
         return ResponseEntity.ok(proveedorServicio.registarProveedor(proveedor));
     }
 
