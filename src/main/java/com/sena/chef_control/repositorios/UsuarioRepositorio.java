@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
@@ -20,6 +21,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
     @Query("UPDATE Usuario p SET p.idEstado.idEstado = :nuevoEstado WHERE p.numeroDocumento = :numeroDocumento")
     void cambiarEstadoUsuarioRepositorio(@Param("numeroDocumento") int numeroDocumento, @Param("nuevoEstado") int nuevoEstado);
 
-    @Query("SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena")
-    Usuario inicioSesionUsuarioRepositorio(@Param("correo") String correo, @Param("contrasena") String contrasena);
+    @Query("SELECT u FROM Usuario u WHERE u.correo = :correo")
+    Optional<Usuario> inicioSesionUsuarioRepositorio(@Param("correo") String correo);
 }

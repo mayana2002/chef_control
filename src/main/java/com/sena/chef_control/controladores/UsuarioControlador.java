@@ -1,5 +1,6 @@
 package com.sena.chef_control.controladores;
 
+import com.sena.chef_control.dto.InicioSesionSolicitud;
 import com.sena.chef_control.dto.UsuarioSolicitud;
 import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Rol;
@@ -7,10 +8,13 @@ import com.sena.chef_control.entidades.TipoDocumento;
 import com.sena.chef_control.entidades.Usuario;
 import com.sena.chef_control.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -57,14 +61,21 @@ public class UsuarioControlador {
         usuarioServicio.cambiarEstadoUsuarioServicio(numeroDocumento, idEstado);
     }
 
-    @PostMapping("/inicio-sesion/{correo}/{password}")
-    public ResponseEntity<Usuario> inicioSesionUsuarioControlador(@PathVariable String correo, @PathVariable String password) {
-        Usuario usuario = usuarioServicio.inicioSesionUsuarioServicio(correo, password);
-        if (usuario != null) {
-            return ResponseEntity.ok(usuario);
+    @PostMapping("/inicio-sesion")
+    public ResponseEntity<Usuario> inicioSesionUsuarioControlador(@RequestBody InicioSesionSolicitud inicioSesionSolicitud) {
+        Optional<Usuario> optionalUsuario = usuarioServicio.inicioSesionUsuarioServicio(inicioSesionSolicitud.getCorreo());
+
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            if (passwordEncoder.matches(inicioSesionSolicitud.getContrasena(), usuario.getContrasena())) {
+                return ResponseEntity.ok(usuario);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Use HTTP status code
+            }
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
 }

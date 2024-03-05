@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
@@ -32,7 +33,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public Usuario inicioSesionUsuarioServicio(String correo, String contrasena) {
-        return usuarioRepositorio.inicioSesionUsuarioRepositorio(correo, contrasena);
+    public Optional<Usuario> inicioSesionUsuarioServicio(String correo) {
+        return usuarioRepositorio.inicioSesionUsuarioRepositorio(correo);
     }
 }

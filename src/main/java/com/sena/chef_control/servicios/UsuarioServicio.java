@@ -3,6 +3,7 @@ package com.sena.chef_control.servicios;
 import com.sena.chef_control.entidades.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioServicio {
 
@@ -12,5 +13,5 @@ public interface UsuarioServicio {
 
     public void cambiarEstadoUsuarioServicio(int numeroDocumento, int idEstado);
 
-    public Usuario inicioSesionUsuarioServicio(String correo, String contrasena);
+    public Optional<Usuario> inicioSesionUsuarioServicio(String correo);
 }
