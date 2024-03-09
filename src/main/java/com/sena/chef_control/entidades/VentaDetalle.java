@@ -26,5 +26,10 @@ public class VentaDetalle {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_menu")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Menu idEstado;
+    private Menu idMenu;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_venta")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Venta idVenta;
 }

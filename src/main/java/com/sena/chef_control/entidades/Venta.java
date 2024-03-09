@@ -18,7 +18,7 @@ public class Venta {
 
     @Id
     @Column(name = "id_venta")
-    private String idVenta;
+    private int idVenta;
 
     @Column(name = "fecha_venta")
     private LocalDateTime fechaVenta;
