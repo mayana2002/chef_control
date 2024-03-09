@@ -18,7 +18,7 @@ public class Usuario {
 
     @Id
     @Column(name = "numero_documento")
-    private int numeroDocumento;
+    private long numeroDocumento;
 
     @Column(name = "nombre_completo")
     private String nombreCompleto;
