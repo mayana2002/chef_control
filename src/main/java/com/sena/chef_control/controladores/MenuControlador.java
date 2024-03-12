@@ -33,7 +33,7 @@ public class MenuControlador {
         menu.setDescripcionMenu(menuSolicitud.getDescripcionMenu());
         menu.setPrecioMenu(menuSolicitud.getPrecioMenu());
         menu.setIdEstado(estado);
-        menu.setCategoriaMenu(categoriaMenu);
+        menu.setIdCategoriaMenu(categoriaMenu);
 
         return ResponseEntity.ok(menuServicio.crearMenu(menu));
     }

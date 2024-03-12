@@ -10,8 +10,6 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_menus", schema = "chef_control")
 public class Menu {
@@ -37,5 +35,5 @@ public class Menu {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria_menu")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private CategoriaMenu categoriaMenu;
+    private CategoriaMenu idCategoriaMenu;
 }
