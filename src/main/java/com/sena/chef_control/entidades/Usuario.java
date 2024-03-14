@@ -10,21 +10,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_usuarios", schema = "chef_control")
 public class Usuario {
 
     @Id
     @Column(name = "numero_documento")
-    private long numeroDocumento;
+    private String numeroDocumento;
 
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
     @Column(name = "telefono")
-    private int telefono;
+    private String telefono;
 
     @Column(name = "direccion")
     private String direccion;
@@ -32,7 +30,7 @@ public class Usuario {
     @Column(name = "correo")
     private String correo;
 
-    @Column(name = "contraseña")
+    @Column(name = "contrasena")
     private String contrasena;
 
     @Column(name = "ruta_foto")

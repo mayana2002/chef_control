@@ -7,8 +7,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_proveedores", schema = "chef_control")
 public class Proveedor {

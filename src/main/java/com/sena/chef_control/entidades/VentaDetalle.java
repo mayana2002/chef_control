@@ -10,8 +10,6 @@ import java.awt.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_ventas_detalles", schema = "chef_control")
 public class VentaDetalle {

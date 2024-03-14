@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "tb_pagos_usuarios")
+@Table(name = "tb_pagos_usuarios", schema = "chef_control")
 public class PagoUsuario {
 
     @Id

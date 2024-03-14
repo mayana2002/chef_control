@@ -8,10 +8,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "tb_respuestas_preguntas")
+@Table(name = "tb_respuestas_preguntas", schema = "chef_control")
 public class RespuestaPregunta {
 
     @Id

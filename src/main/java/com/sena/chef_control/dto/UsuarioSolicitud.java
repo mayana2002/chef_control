@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class UsuarioSolicitud {
-    private int numeroDocumento;
+    private String numeroDocumento;
     private String nombreCompleto;
-    private int telefono;
+    private String telefono;
     private String direccion;
     private String correo;
     private String contrasena;

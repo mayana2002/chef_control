@@ -6,6 +6,6 @@ import lombok.Data;
 public class PagoUsuarioSolicitud {
     private Double valorPagado;
     private String descripcionPago;
-    private int numeroDocumento;
+    private String numeroDocumento;
     private int idMedioPago;
 }

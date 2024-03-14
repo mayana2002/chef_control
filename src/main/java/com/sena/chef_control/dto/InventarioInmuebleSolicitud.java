@@ -7,5 +7,5 @@ public class InventarioInmuebleSolicitud {
     private String nombreInmueble;
     private String descripcionInmueble;
     private int cantidadInmueble;
-    private int numeroDocumento;
+    private String numeroDocumento;
 }

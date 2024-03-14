@@ -10,8 +10,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_medios_pagos", schema = "chef_control")
 public class MedioPago {

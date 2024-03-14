@@ -10,10 +10,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "tb_preguntas")
+@Table(name = "tb_preguntas", schema = "chef_control")
 public class Pregunta {
 
     @Id

@@ -10,8 +10,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_tipos_documentos", schema = "chef_control")
 public class TipoDocumento {

@@ -26,8 +26,8 @@ public class UsuarioControlador {
     @PostMapping("/crear")
     public ResponseEntity<Usuario> registrarUsuarioControlador(@RequestBody UsuarioSolicitud usuarioSolicitud) {
 
-        TipoDocumento tipoDicumento = new TipoDocumento();
-        tipoDicumento.setIdTipoDocumento(usuarioSolicitud.getIdTipoDocumento());
+        TipoDocumento tipoDocumento = new TipoDocumento();
+        tipoDocumento.setIdTipoDocumento(usuarioSolicitud.getIdTipoDocumento());
 
         Rol rol = new Rol();
         rol.setIdRolUsuario(usuarioSolicitud.getIdRolUsuario());
@@ -36,14 +36,14 @@ public class UsuarioControlador {
         estado.setIdEstado(1);
 
         Usuario usuario = new Usuario();
-        usuario.setNumeroDocumento(usuarioSolicitud.getNumeroDocumento());
+        usuario.setNumeroDocumento(String.valueOf(usuarioSolicitud.getNumeroDocumento()));
         usuario.setNombreCompleto(usuarioSolicitud.getNombreCompleto());
         usuario.setTelefono(usuarioSolicitud.getTelefono());
         usuario.setDireccion(usuarioSolicitud.getDireccion());
         usuario.setCorreo(usuarioSolicitud.getCorreo());
         usuario.setContrasena(usuarioSolicitud.getContrasena());
         usuario.setRutaFoto(usuarioSolicitud.getRutaFoto());
-        usuario.setIdTipoDocumento(tipoDicumento);
+        usuario.setIdTipoDocumento(tipoDocumento);
         usuario.setRolUsuario(rol);
         usuario.setIdEstado(estado);
 

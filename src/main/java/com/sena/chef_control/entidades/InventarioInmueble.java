@@ -11,10 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "tb_inventarios_inmuebles")
+@Table(name = "tb_inventarios_inmuebles", schema = "chef_control")
 public class InventarioInmueble {
 
     @Id
