@@ -6,6 +6,8 @@ import com.sena.chef_control.servicios.InventarioInmuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InventarioInmuebleServiceImpl implements InventarioInmuebleService {
 
@@ -15,5 +17,10 @@ public class InventarioInmuebleServiceImpl implements InventarioInmuebleService 
     @Override
     public InventarioInmueble registrarInventarioInmueble(InventarioInmueble inventarioInmueble) {
         return inventarioInmuebleRepositorio.save(inventarioInmueble);
+    }
+
+    @Override
+    public List<InventarioInmueble> listarTodosInmueblesService() {
+        return inventarioInmuebleRepositorio.listarTodosInmueblesRepositorio();
     }
 }
