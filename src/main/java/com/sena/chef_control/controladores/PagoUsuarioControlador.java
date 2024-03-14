@@ -7,10 +7,9 @@ import com.sena.chef_control.entidades.Usuario;
 import com.sena.chef_control.servicios.PagoUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pago-usuario")
@@ -33,5 +32,10 @@ public class PagoUsuarioControlador {
         pagoUsuario.setNumeroDocumento(usuario);
         pagoUsuario.setIdMedioPago(medioPago);
         return ResponseEntity.ok(pagoUsuarioServicio.craerPagoUsuario(pagoUsuario));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PagoUsuario>> listarTodosPagosControlador() {
+        return ResponseEntity.ok(pagoUsuarioServicio.listarTodosPagosServicio());
     }
 }
