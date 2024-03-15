@@ -16,6 +16,9 @@ public interface ProveedorRepositorio extends JpaRepository<Proveedor, Integer> 
     @Query("SELECT u FROM Proveedor u JOIN FETCH u.idEstado r")
     List<Proveedor> listarTodosProveedoresRepositorio();
 
+    @Query("SELECT p FROM Proveedor p JOIN FETCH p.idEstado e WHERE p.idProveedor = :idProveedor")
+    Proveedor listarProveedorIdRepositorio(@Param("idProveedor") int idProveedor);
+
     @Modifying
     @Transactional
     @Query("UPDATE Proveedor p SET p.idEstado.idEstado = :nuevoEstado WHERE p.idProveedor = :proveedorId")

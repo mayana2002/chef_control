@@ -44,4 +44,9 @@ public class ProveedorControlador {
     public void cambiarEstadoProveedorService(@PathVariable int idProveedor, @PathVariable int idEstado) {
         proveedorServicio.cambiarEstadoProveedorService(idProveedor, idEstado);
     }
+
+    @GetMapping("/{idProveedor}")
+    public ResponseEntity<Proveedor> listarProveedorIdControlador(@PathVariable int idProveedor) {
+        return ResponseEntity.ok(proveedorServicio.listarProveedorIdServicio(idProveedor));
+    }
 }

@@ -27,4 +27,9 @@ public class ProveedorServicioImpl implements ProveedorServicio {
     public void cambiarEstadoProveedorService(int idProveedor, int idEstado) {
         proveedorRepositorio.cambiarEstadoProveedorRepositorio(idProveedor, idEstado);
     }
+
+    @Override
+    public Proveedor listarProveedorIdServicio(int idProveedor) {
+        return proveedorRepositorio.listarProveedorIdRepositorio(idProveedor);
+    }
 }

@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface MenuRepositorio extends JpaRepository<Menu, Integer> {
-    @Query("SELECT u FROM Menu u JOIN FETCH u.idCategoriaMenu e JOIN FETCH u.idEstado td WHERE td.idEstado = 1")
+    @Query("SELECT u FROM Menu u JOIN FETCH u.idCategoriaMenu e JOIN FETCH u.idEstado td")
     List<Menu> listarTodoMenuRepositorio();
 
-    @Query("SELECT u FROM Menu u JOIN FETCH u.idCategoriaMenu e JOIN FETCH u.idEstado td WHERE td.idEstado = 1 AND u.idMenu = :idMenu")
+    @Query("SELECT u FROM Menu u JOIN FETCH u.idCategoriaMenu e JOIN FETCH u.idEstado td WHERE u.idMenu = :idMenu")
     Menu listarMenuIdRepositorio(@Param("idMenu") int idMenu);
 }

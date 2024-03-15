@@ -11,4 +11,6 @@ public interface ProveedorServicio {
     public List<Proveedor> listarTodosProveedoresServicio();
 
     public void cambiarEstadoProveedorService(int idProveedor, int idEstado);
+
+    public Proveedor listarProveedorIdServicio(int idProveedor);
 }
