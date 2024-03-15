@@ -4,7 +4,6 @@ import com.sena.chef_control.dto.MenuSolicitud;
 import com.sena.chef_control.entidades.CategoriaMenu;
 import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Menu;
-import com.sena.chef_control.repositorios.MenuRepositorio;
 import com.sena.chef_control.servicios.MenuServicio;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +40,10 @@ public class MenuControlador {
     @GetMapping
     public ResponseEntity<List<Menu>> listarTodoMenuControlador() {
         return ResponseEntity.ok(menuServicio.listarTodoMenuServicio());
+    }
+
+    @GetMapping("/{idMenu}")
+    public ResponseEntity<Menu> listarMenuIdControlador(@PathVariable int idMenu) {
+        return ResponseEntity.ok(menuServicio.listarMenuIdServicio(idMenu));
     }
 }

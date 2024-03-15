@@ -23,4 +23,9 @@ public class MenuServicioImpl implements MenuServicio {
     public List<Menu> listarTodoMenuServicio() {
         return menuRepositorio.listarTodoMenuRepositorio();
     }
+
+    @Override
+    public Menu listarMenuIdServicio(int idMenu) {
+        return menuRepositorio.listarMenuIdRepositorio(idMenu);
+    }
 }

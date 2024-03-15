@@ -9,4 +9,6 @@ public interface MenuServicio {
     public Menu crearMenu(Menu menu);
 
     public List<Menu> listarTodoMenuServicio();
+
+    public Menu listarMenuIdServicio(int idMenu);
 }
