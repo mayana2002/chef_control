@@ -32,8 +32,16 @@ public class UsuarioControlador {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @PostMapping("/crear")
-    public ResponseEntity<Usuario> registrarUsuarioControlador(@RequestBody UsuarioSolicitud usuarioSolicitud) {
+    public ResponseEntity<Usuario> registrarUsuarioControlador(@RequestBody UsuarioSolicitud usuarioSolicitud, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtil.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         TipoDocumento tipoDocumento = new TipoDocumento();
         tipoDocumento.setIdTipoDocumento(usuarioSolicitud.getIdTipoDocumento());
 
