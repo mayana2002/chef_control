@@ -23,7 +23,17 @@ public class ProveedorControlador {
     private JwtUtilidad jwtUtilidad;
 
     @PostMapping("/crear")
-    public ResponseEntity<Proveedor> registrarProveedorControlador(@RequestBody ProveedorSolicitud proveedorSolicitud) {
+    public ResponseEntity<Proveedor> registrarProveedorControlador(@RequestBody ProveedorSolicitud proveedorSolicitud, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         Estado estado = new Estado();
         estado.setIdEstado(1);
 
