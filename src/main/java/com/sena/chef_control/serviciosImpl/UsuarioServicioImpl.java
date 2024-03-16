@@ -36,4 +36,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public Optional<Usuario> inicioSesionUsuarioServicio(String correo) {
         return usuarioRepositorio.inicioSesionUsuarioRepositorio(correo);
     }
+
+    @Override
+    public Usuario listarUsuarioIdServicio(String numeroDocumento) {
+        return usuarioRepositorio.listarUsuarioIdRepositorio(numeroDocumento);
+    }
 }

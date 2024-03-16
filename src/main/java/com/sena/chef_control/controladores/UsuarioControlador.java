@@ -60,8 +60,31 @@ public class UsuarioControlador {
     }
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarTodosUsuariosControlador() {
+    public ResponseEntity<List<Usuario>> listarTodosUsuariosControlador(@RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtil.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return ResponseEntity.ok(usuarioServicio.listarTodosUsuarios());
+    }
+
+    @GetMapping("/{numeroDocumento}")
+    public ResponseEntity<Usuario> listarUsuarioIdControlador(@RequestHeader("Authorization") String token, @PathVariable String numeroDocumento) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtil.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(usuarioServicio.listarUsuarioIdServicio(numeroDocumento));
     }
 
     @PutMapping("/cambiar-estado/{numeroDocumento}/{idEstado}")

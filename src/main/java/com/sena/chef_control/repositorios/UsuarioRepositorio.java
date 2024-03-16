@@ -23,4 +23,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
 
     @Query("SELECT u FROM Usuario u WHERE u.correo = :correo")
     Optional<Usuario> inicioSesionUsuarioRepositorio(@Param("correo") String correo);
+
+    @Query("SELECT u FROM Usuario u JOIN FETCH u.rolUsuario e JOIN FETCH u.idTipoDocumento td JOIN FETCH u.idEstado r WHERE u.numeroDocumento = :numeroDocumento")
+    Usuario listarUsuarioIdRepositorio(@Param("numeroDocumento") String numeroDocumento);
 }

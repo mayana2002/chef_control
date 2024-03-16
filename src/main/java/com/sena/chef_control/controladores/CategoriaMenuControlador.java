@@ -23,7 +23,6 @@ public class CategoriaMenuControlador {
     @Autowired
     private JwtUtilidad jwtUtilidad;
 
-
     @GetMapping
     public ResponseEntity<List<CategoriaMenu>> listarInformacionCategoriasMenusControlador(@RequestHeader("Authorization") String token) {
         if (token == null || !token.startsWith("Bearer ")) {

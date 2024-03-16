@@ -14,4 +14,6 @@ public interface UsuarioServicio {
     public void cambiarEstadoUsuarioServicio(int numeroDocumento, int idEstado);
 
     public Optional<Usuario> inicioSesionUsuarioServicio(String correo);
+
+    public Usuario listarUsuarioIdServicio(String numeroDocumento);
 }
