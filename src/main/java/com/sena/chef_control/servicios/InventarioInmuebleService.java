@@ -9,4 +9,6 @@ public interface InventarioInmuebleService {
     public InventarioInmueble registrarInventarioInmueble(InventarioInmueble inventarioInmueble);
 
     public List<InventarioInmueble> listarTodosInmueblesService();
+
+    public InventarioInmueble listarInmuebleIdServicio(int idInventarioInmueble);
 }

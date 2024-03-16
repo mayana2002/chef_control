@@ -5,7 +5,9 @@ import com.sena.chef_control.entidades.MedioPago;
 import com.sena.chef_control.entidades.PagoUsuario;
 import com.sena.chef_control.entidades.Usuario;
 import com.sena.chef_control.servicios.PagoUsuarioServicio;
+import com.sena.chef_control.utilidad.JwtUtilidad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class PagoUsuarioControlador {
 
     @Autowired
     private PagoUsuarioServicio pagoUsuarioServicio;
+
+    @Autowired
+    private JwtUtilidad jwtUtilidad;
 
     @PostMapping("/crear")
     public ResponseEntity<PagoUsuario> crearPagoUsuarioControlador(@RequestBody PagoUsuarioSolicitud pagoUsuarioSolicitud) {
@@ -35,7 +40,16 @@ public class PagoUsuarioControlador {
     }
 
     @GetMapping
-    public ResponseEntity<List<PagoUsuario>> listarTodosPagosControlador() {
+    public ResponseEntity<List<PagoUsuario>> listarTodosPagosControlador(@RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return ResponseEntity.ok(pagoUsuarioServicio.listarTodosPagosServicio());
     }
 }

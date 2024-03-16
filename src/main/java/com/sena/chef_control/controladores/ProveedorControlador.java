@@ -4,7 +4,9 @@ import com.sena.chef_control.dto.ProveedorSolicitud;
 import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Proveedor;
 import com.sena.chef_control.servicios.ProveedorServicio;
+import com.sena.chef_control.utilidad.JwtUtilidad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,9 @@ public class ProveedorControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private JwtUtilidad jwtUtilidad;
 
     @PostMapping("/crear")
     public ResponseEntity<Proveedor> registrarProveedorControlador(@RequestBody ProveedorSolicitud proveedorSolicitud) {
@@ -36,7 +41,16 @@ public class ProveedorControlador {
     }
 
     @GetMapping
-    public ResponseEntity<List<Proveedor>> listarTodosProveedoresControlador() {
+    public ResponseEntity<List<Proveedor>> listarTodosProveedoresControlador(@RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return ResponseEntity.ok(proveedorServicio.listarTodosProveedoresServicio());
     }
 
@@ -46,7 +60,16 @@ public class ProveedorControlador {
     }
 
     @GetMapping("/{idProveedor}")
-    public ResponseEntity<Proveedor> listarProveedorIdControlador(@PathVariable int idProveedor) {
+    public ResponseEntity<Proveedor> listarProveedorIdControlador(@PathVariable int idProveedor, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return ResponseEntity.ok(proveedorServicio.listarProveedorIdServicio(idProveedor));
     }
 }
