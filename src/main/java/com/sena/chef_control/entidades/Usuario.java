@@ -50,9 +50,4 @@ public class Usuario {
     @JoinColumn(name = "id_estado")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Estado idEstado;
-
-    public void setContrasena(String contrasena) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.contrasena = passwordEncoder.encode(contrasena);
-    }
 }

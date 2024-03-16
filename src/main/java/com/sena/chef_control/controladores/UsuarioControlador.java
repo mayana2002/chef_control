@@ -1,12 +1,15 @@
 package com.sena.chef_control.controladores;
 
 import com.sena.chef_control.dto.InicioSesionSolicitud;
+import com.sena.chef_control.dto.UsuarioRespuesta;
 import com.sena.chef_control.dto.UsuarioSolicitud;
 import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Rol;
 import com.sena.chef_control.entidades.TipoDocumento;
 import com.sena.chef_control.entidades.Usuario;
 import com.sena.chef_control.servicios.UsuarioServicio;
+
+import com.sena.chef_control.utilidad.JwtUtilidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,11 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private JwtUtilidad jwtUtil;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @PostMapping("/crear")
     public ResponseEntity<Usuario> registrarUsuarioControlador(@RequestBody UsuarioSolicitud usuarioSolicitud) {
@@ -41,7 +49,7 @@ public class UsuarioControlador {
         usuario.setTelefono(usuarioSolicitud.getTelefono());
         usuario.setDireccion(usuarioSolicitud.getDireccion());
         usuario.setCorreo(usuarioSolicitud.getCorreo());
-        usuario.setContrasena(usuarioSolicitud.getContrasena());
+        usuario.setContrasena(encoder.encode(usuarioSolicitud.getContrasena()));
         usuario.setRutaFoto(usuarioSolicitud.getRutaFoto());
         usuario.setIdTipoDocumento(tipoDocumento);
         usuario.setRolUsuario(rol);
@@ -62,17 +70,22 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/inicio-sesion")
-    public ResponseEntity<Usuario> inicioSesionUsuarioControlador(@RequestBody InicioSesionSolicitud inicioSesionSolicitud) {
+    public ResponseEntity<UsuarioRespuesta> inicioSesionUsuarioControlador(@RequestBody InicioSesionSolicitud inicioSesionSolicitud) {
         Optional<Usuario> optionalUsuario = usuarioServicio.inicioSesionUsuarioServicio(inicioSesionSolicitud.getCorreo());
-
+        UsuarioRespuesta usuarioRespuesta = new UsuarioRespuesta();
         if (optionalUsuario.isPresent()) {
             Usuario usuario = optionalUsuario.get();
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String token = jwtUtil.generateToken(usuario.getCorreo());
+            usuarioRespuesta.setToken(token);
+            usuarioRespuesta.setNumeroDocumento(usuario.getNumeroDocumento());
+            usuarioRespuesta.setRol(usuario.getRolUsuario().getRolUsuario());
+            usuarioRespuesta.setCorreo(usuario.getCorreo());
 
-            if (passwordEncoder.matches(inicioSesionSolicitud.getContrasena(), usuario.getContrasena())) {
-                return ResponseEntity.ok(usuario);
+            if (encoder.matches(inicioSesionSolicitud.getContrasena(), usuario.getContrasena())) {
+
+                return ResponseEntity.ok(usuarioRespuesta);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Use HTTP status code
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
         } else {
             return ResponseEntity.notFound().build();
