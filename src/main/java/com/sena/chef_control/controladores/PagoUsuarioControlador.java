@@ -1,6 +1,7 @@
 package com.sena.chef_control.controladores;
 
 import com.sena.chef_control.dto.PagoUsuarioSolicitud;
+import com.sena.chef_control.dto.ReporteFechasSolicitud;
 import com.sena.chef_control.entidades.MedioPago;
 import com.sena.chef_control.entidades.PagoUsuario;
 import com.sena.chef_control.entidades.Usuario;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -51,5 +55,24 @@ public class PagoUsuarioControlador {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(pagoUsuarioServicio.listarTodosPagosServicio());
+    }
+
+    @GetMapping("/reporte/fechas")
+    public ResponseEntity<List<PagoUsuario>> listarPagoUsuarioFechasServicio (@RequestBody ReporteFechasSolicitud reporteFechasSolicitud, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        LocalDate fechaInicial = reporteFechasSolicitud.getFechaInicial();
+        LocalDate fechaFinal = reporteFechasSolicitud.getFechaFinal();
+        LocalDateTime fechaInicialDateTime = fechaInicial.atStartOfDay();
+        LocalDateTime fechaFinalDateTime = fechaFinal.atTime(LocalTime.MAX);
+        return ResponseEntity.ok(pagoUsuarioServicio.listarPagoUsuarioFechasServicio(fechaInicialDateTime, fechaFinalDateTime));
     }
 }

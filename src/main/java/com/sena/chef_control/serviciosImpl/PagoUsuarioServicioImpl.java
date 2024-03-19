@@ -6,6 +6,7 @@ import com.sena.chef_control.servicios.PagoUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,5 +23,10 @@ public class PagoUsuarioServicioImpl implements PagoUsuarioServicio {
     @Override
     public List<PagoUsuario> listarTodosPagosServicio() {
         return pagoUsuarioRepositorio.listarTodosPagosRepositorio();
+    }
+
+    @Override
+    public List<PagoUsuario> listarPagoUsuarioFechasServicio(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
+        return pagoUsuarioRepositorio.listarPagoUsuarioFechasRepositorio(fechaInicial, fechaFinal);
     }
 }
