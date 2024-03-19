@@ -2,6 +2,7 @@ package com.sena.chef_control.controladores;
 
 import com.sena.chef_control.dto.PagoUsuarioSolicitud;
 import com.sena.chef_control.dto.ReporteFechasSolicitud;
+import com.sena.chef_control.dto.ReportePagosUsuariosTodos;
 import com.sena.chef_control.entidades.MedioPago;
 import com.sena.chef_control.entidades.PagoUsuario;
 import com.sena.chef_control.entidades.Usuario;
@@ -74,5 +75,50 @@ public class PagoUsuarioControlador {
         LocalDateTime fechaInicialDateTime = fechaInicial.atStartOfDay();
         LocalDateTime fechaFinalDateTime = fechaFinal.atTime(LocalTime.MAX);
         return ResponseEntity.ok(pagoUsuarioServicio.listarPagoUsuarioFechasServicio(fechaInicialDateTime, fechaFinalDateTime));
+    }
+
+    @GetMapping("/reporte/usuario/{numeroDocumento}")
+    public ResponseEntity<List<PagoUsuario>> listarPagoUsuarioPorUsuarioControlador (@PathVariable("numeroDocumento") String numeroDocumento, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(pagoUsuarioServicio.listarPagoUsuarioPorUsuarioServicio(numeroDocumento));
+    }
+    @GetMapping("/reporte/medio-pago/{descripcionTipoPago}")
+    public ResponseEntity<List<PagoUsuario>> listarPagoUsuarioMedioPagoControlador (@PathVariable("descripcionTipoPago") String descripcionTipoPago, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(pagoUsuarioServicio.listarPagoUsuarioMedioPagoServicio(descripcionTipoPago));
+    }
+
+    @GetMapping("/reporte/todos")
+    public ResponseEntity<List<PagoUsuario>> listarPagoUsuarioConFiltrosControlador (@RequestBody ReportePagosUsuariosTodos reportePagosUsuariosTodos, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        LocalDate fechaInicial = reportePagosUsuariosTodos.getFechaInicial();
+        LocalDate fechaFinal = reportePagosUsuariosTodos.getFechaFinal();
+        LocalDateTime fechaInicialDateTime = fechaInicial.atStartOfDay();
+        LocalDateTime fechaFinalDateTime = fechaFinal.atTime(LocalTime.MAX);
+        return ResponseEntity.ok(pagoUsuarioServicio.listarPagoUsuarioConFiltrosServicio(fechaInicialDateTime, fechaFinalDateTime, reportePagosUsuariosTodos.getNumeroDocumento(), reportePagosUsuariosTodos.getDescripcionTipoPago()));
     }
 }

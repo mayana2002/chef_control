@@ -29,4 +29,19 @@ public class PagoUsuarioServicioImpl implements PagoUsuarioServicio {
     public List<PagoUsuario> listarPagoUsuarioFechasServicio(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         return pagoUsuarioRepositorio.listarPagoUsuarioFechasRepositorio(fechaInicial, fechaFinal);
     }
+
+    @Override
+    public List<PagoUsuario> listarPagoUsuarioPorUsuarioServicio(String numeroDocumento) {
+        return pagoUsuarioRepositorio.listarPagoUsuarioPorUsuario(numeroDocumento);
+    }
+
+    @Override
+    public List<PagoUsuario> listarPagoUsuarioMedioPagoServicio(String descripcionTipoPago) {
+        return pagoUsuarioRepositorio.listarPagoUsuarioMedioPago(descripcionTipoPago);
+    }
+
+    @Override
+    public List<PagoUsuario> listarPagoUsuarioConFiltrosServicio(LocalDateTime fechaInicial, LocalDateTime fechaFinal, String numeroDocumento, String descripcionTipoPago) {
+        return pagoUsuarioRepositorio.listarPagoUsuarioConFiltros(fechaInicial, fechaFinal, numeroDocumento, descripcionTipoPago);
+    }
 }
