@@ -32,4 +32,9 @@ public class ProveedorServicioImpl implements ProveedorServicio {
     public Proveedor listarProveedorIdServicio(int idProveedor) {
         return proveedorRepositorio.listarProveedorIdRepositorio(idProveedor);
     }
+
+    @Override
+    public Proveedor listarProveedorCorreoServicio(String correoProveedor) {
+        return proveedorRepositorio.listarProveedorCorreoRepositorio(correoProveedor);
+    }
 }

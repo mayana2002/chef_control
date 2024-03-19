@@ -1,5 +1,6 @@
 package com.sena.chef_control.controladores;
 
+import com.sena.chef_control.dto.CorreoProveedorSolicitud;
 import com.sena.chef_control.dto.ProveedorSolicitud;
 import com.sena.chef_control.entidades.Estado;
 import com.sena.chef_control.entidades.Proveedor;
@@ -81,5 +82,19 @@ public class ProveedorControlador {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(proveedorServicio.listarProveedorIdServicio(idProveedor));
+    }
+
+    @GetMapping("/correo")
+    public ResponseEntity<Proveedor> listarProveedorCorreoControlador(@RequestBody CorreoProveedorSolicitud correoProveedorSolicitud, String correoProveedor, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(proveedorServicio.listarProveedorCorreoServicio(correoProveedorSolicitud.getCorreo()));
     }
 }

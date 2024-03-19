@@ -25,7 +25,16 @@ public class MenuControlador {
     private JwtUtilidad jwtUtilidad;
 
     @PostMapping
-    public ResponseEntity<Menu> crearMenuControlador(@RequestBody MenuSolicitud menuSolicitud) {
+    public ResponseEntity<Menu> crearMenuControlador(@RequestBody MenuSolicitud menuSolicitud, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         Estado estado = new Estado();
         estado.setIdEstado(1);
 
@@ -68,5 +77,25 @@ public class MenuControlador {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(menuServicio.listarMenuIdServicio(idMenu));
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<Menu>> listarMenuPorNombre(@PathVariable String nombre, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<Menu> menus = menuServicio.listarCategoriaNombreServicio(nombre);
+        if (menus.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(menus);
+        }
     }
 }

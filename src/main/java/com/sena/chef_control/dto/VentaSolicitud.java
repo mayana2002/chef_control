@@ -10,4 +10,5 @@ public class VentaSolicitud {
     private Double valorRecibido;
     private Double valorCambio;
     private int idMedioPago;
+    private Integer idVenta;
 }

@@ -11,4 +11,6 @@ public interface MenuServicio {
     public List<Menu> listarTodoMenuServicio();
 
     public Menu listarMenuIdServicio(int idMenu);
+
+    List<Menu> listarCategoriaNombreServicio(String nombre);
 }

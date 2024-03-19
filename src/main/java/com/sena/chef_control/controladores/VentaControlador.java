@@ -5,12 +5,11 @@ import com.sena.chef_control.entidades.MedioPago;
 import com.sena.chef_control.entidades.Usuario;
 import com.sena.chef_control.entidades.Venta;
 import com.sena.chef_control.servicios.VentaServicio;
+import com.sena.chef_control.utilidad.JwtUtilidad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/venta")
@@ -19,8 +18,20 @@ public class VentaControlador {
     @Autowired
     private VentaServicio ventaServicio;
 
+    @Autowired
+    private JwtUtilidad jwtUtilidad;
+
     @PostMapping("/crear")
-    public ResponseEntity<Venta> crearVentaControlador(@RequestBody VentaSolicitud ventaSolicitud) {
+    public ResponseEntity<Venta> crearVentaControlador(@RequestBody VentaSolicitud ventaSolicitud, @RequestHeader("Authorization") String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String jwtToken = token.substring(7); // Eliminar "Bearer " del token
+
+        if (!jwtUtilidad.validateToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         Usuario usuario = new Usuario();
         usuario.setNumeroDocumento(ventaSolicitud.getNumeroDocumento());
 
@@ -34,7 +45,9 @@ public class VentaControlador {
         venta.setValorRecibido(ventaSolicitud.getValorRecibido());
         venta.setValorCambio(ventaSolicitud.getValorCambio());
         venta.setIdMedioPago(medioPago);
-
+        if (ventaSolicitud.getIdVenta() != null) {
+            venta.setIdVenta(ventaSolicitud.getIdVenta());
+        }
         return ResponseEntity.ok(ventaServicio.crearVenta(venta));
     }
 }

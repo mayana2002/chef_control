@@ -13,4 +13,6 @@ public interface ProveedorServicio {
     public void cambiarEstadoProveedorService(int idProveedor, int idEstado);
 
     public Proveedor listarProveedorIdServicio(int idProveedor);
+
+    Proveedor listarProveedorCorreoServicio(String correoProveedor);
 }
