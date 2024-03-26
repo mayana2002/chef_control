@@ -8,4 +8,6 @@ public class UsuarioRespuesta {
     private String rol;
     private String token;
     private String correo;
+    private String nombreCompleto;
+    private String rutaFoto;
 }

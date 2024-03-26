@@ -18,4 +18,9 @@ public class RespuestaPreguntaServicioImpl implements RespuestaPreguntaServicio 
     public List<RespuestaPregunta> listarRespuestaPregunta() {
         return respuestaPreguntaRepositorio.listarRespuestaPreguntaRepositorio();
     }
+
+    @Override
+    public RespuestaPregunta listarRespuestaPorPreguntaServicio(String descripcionRespuesta, int idPregunta) {
+        return respuestaPreguntaRepositorio.listarRespuestaPorPreguntaRepositorio(descripcionRespuesta, idPregunta);
+    }
 }

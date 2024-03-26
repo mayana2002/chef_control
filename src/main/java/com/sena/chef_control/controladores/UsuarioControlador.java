@@ -111,6 +111,8 @@ public class UsuarioControlador {
             usuarioRespuesta.setNumeroDocumento(usuario.getNumeroDocumento());
             usuarioRespuesta.setRol(usuario.getRolUsuario().getRolUsuario());
             usuarioRespuesta.setCorreo(usuario.getCorreo());
+            usuarioRespuesta.setRutaFoto(usuario.getRutaFoto());
+            usuarioRespuesta.setNombreCompleto(usuario.getNombreCompleto());
 
             if (encoder.matches(inicioSesionSolicitud.getContrasena(), usuario.getContrasena())) {
 
