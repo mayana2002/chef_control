@@ -33,4 +33,9 @@ public class MenuServicioImpl implements MenuServicio {
     public List<Menu> listarCategoriaNombreServicio(String nombre) {
         return menuRepositorio.listarCategoriaNombreRepositorio(nombre);
     }
+
+    @Override
+    public void cambiarEstadoMenuRepositorio(int idMenu, int idEstado) {
+        menuRepositorio.cambiarEstadoMenuRepositorio(idMenu, idEstado);
+    }
 }

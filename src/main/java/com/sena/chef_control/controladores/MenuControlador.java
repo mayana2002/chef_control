@@ -98,4 +98,9 @@ public class MenuControlador {
             return ResponseEntity.ok(menus);
         }
     }
+
+    @PutMapping("/cambiar-estado/{idMenu}/{idEstado}")
+    public void cambiarEstadoProveedorService(@PathVariable int idMenu, @PathVariable int idEstado) {
+        menuServicio.cambiarEstadoMenuRepositorio(idMenu, idEstado);
+    }
 }

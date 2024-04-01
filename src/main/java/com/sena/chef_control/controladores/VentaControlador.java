@@ -51,10 +51,9 @@ public class VentaControlador {
         venta.setValorRecibido(ventaSolicitud.getValorRecibido());
         venta.setValorCambio(ventaSolicitud.getValorCambio());
         venta.setIdMedioPago(medioPago);
-        if (ventaSolicitud.getIdVenta() != null) {
-            venta.setIdVenta(ventaSolicitud.getIdVenta());
-        }
-        return ResponseEntity.ok(ventaServicio.crearVenta(venta));
+
+        Venta creada = ventaServicio.crearVenta(venta);
+        return ResponseEntity.ok(creada);
     }
 
     @GetMapping("/reporte/fechas")

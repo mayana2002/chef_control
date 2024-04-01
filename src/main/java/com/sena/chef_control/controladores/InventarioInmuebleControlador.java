@@ -68,4 +68,9 @@ public class InventarioInmuebleControlador {
         }
         return ResponseEntity.ok(inventarioInmuebleService.listarInmuebleIdServicio(idInventarioInmueble));
     }
+
+    @PutMapping("/cambiar-estado/{idInventarioInmueble}/{idEstado}")
+    public void cambiarEstadoProveedorService(@PathVariable int idInventarioInmueble, @PathVariable int idEstado) {
+        inventarioInmuebleService.cambiarEstadoInventarioInmmuebleServicio(idInventarioInmueble, idEstado);
+    }
 }

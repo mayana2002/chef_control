@@ -28,4 +28,9 @@ public class InventarioInmuebleServiceImpl implements InventarioInmuebleService 
     public InventarioInmueble listarInmuebleIdServicio(int idInventarioInmueble) {
         return inventarioInmuebleRepositorio.listarInmuebleIdRepositorio(idInventarioInmueble);
     }
+
+    @Override
+    public void cambiarEstadoInventarioInmmuebleServicio(int idInventarioInmueble, int nuevoEstado) {
+        inventarioInmuebleRepositorio.cambiarEstadoInventarioInmmuebleRepositorio(idInventarioInmueble, nuevoEstado);
+    }
 }

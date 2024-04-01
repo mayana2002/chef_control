@@ -1,7 +1,9 @@
 package com.sena.chef_control.repositorios;
 
 import com.sena.chef_control.entidades.Menu;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,9 @@ public interface MenuRepositorio extends JpaRepository<Menu, Integer> {
 
     @Query("SELECT DISTINCT m FROM Menu m JOIN FETCH m.idCategoriaMenu c JOIN FETCH m.idEstado e WHERE m.nombreMenu LIKE %:nombre%")
     List<Menu> listarCategoriaNombreRepositorio(@Param("nombre") String nombre);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Menu p SET p.idEstado.idEstado = :nuevoEstado WHERE p.idMenu = :idMenu")
+    void cambiarEstadoMenuRepositorio(@Param("idMenu") int idMenu, @Param("nuevoEstado") int nuevoEstado);
 }

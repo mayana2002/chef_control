@@ -20,6 +20,7 @@ public class VentaServicioImpl implements VentaServicio {
         return ventaRepositorio.save(venta);
     }
 
+
     @Override
     public List<Venta> listarVentaFechasServicio(LocalDateTime fechaInicial, LocalDateTime fechaFinal) {
         return ventaRepositorio.listarVentaFechasRepositorio(fechaInicial, fechaFinal);
